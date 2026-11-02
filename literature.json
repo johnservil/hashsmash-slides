@@ -1,0 +1,473 @@
+{
+  "_about": "Best published collision attacks (standard IV, complete hash) on reduced-round SHA-256, SHA3-256 and BLAKE3, before HashSmash. log2T in each paper's own unit (calls to the reduced hash). 'source' says where the number was read. log2T null: 'practical' marks a real collision without a stated complexity; otherwise the figure is unknown.",
+  "hashes": {
+    "SHA-256": {
+      "rounds": 64,
+      "published": 2002.6,
+      "milestones": [
+        [
+          2002.6,
+          "SHA-256 · 64 rounds"
+        ]
+      ]
+    },
+    "SHA3-256": {
+      "rounds": 24,
+      "published": 2008.8,
+      "milestones": [
+        [
+          2008.8,
+          "Keccak"
+        ],
+        [
+          2015.6,
+          "SHA-3 · 24 rounds"
+        ]
+      ]
+    },
+    "BLAKE3": {
+      "rounds": 7,
+      "published": 2008.8,
+      "milestones": [
+        [
+          2008.8,
+          "BLAKE · 14"
+        ],
+        [
+          2012.9,
+          "BLAKE2s · 10"
+        ],
+        [
+          2020.03,
+          "BLAKE3 · 7"
+        ]
+      ],
+      "title": "BLAKE family"
+    }
+  },
+  "attacks": [
+    {
+      "hash": "SHA-256",
+      "rounds": 23,
+      "year": 2008.23,
+      "log2T": 18,
+      "ref": "Indesteege, Mendel, Preneel, Rechberger, SAC 2008 (ePrint 2008/131)",
+      "source": "abstract",
+      "mem": null
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 24,
+      "year": 2008.23,
+      "log2T": 28.5,
+      "ref": "Indesteege, Mendel, Preneel, Rechberger, SAC 2008 (ePrint 2008/131)",
+      "source": "abstract",
+      "mem": null
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 24,
+      "year": 2008.46,
+      "log2T": 15.5,
+      "ref": "Sanadhya, Sarkar, INDOCRYPT 2008 (ePrint 2008/270), with a 2^32-entry table (memory 2^37: the table)",
+      "source": "abstract",
+      "mem": 37
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 27,
+      "year": 2011.9,
+      "log2T": null,
+      "practical": true,
+      "ref": "Mendel, Nad, Schläffer, ASIACRYPT 2011: practical 27-step collision",
+      "source": "ePrint 2026/1080, Sect. 1"
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 28,
+      "year": 2013.4,
+      "log2T": null,
+      "practical": true,
+      "ref": "Mendel, Nad, Schläffer, EUROCRYPT 2013: practical 28-step collision",
+      "source": "ePrint 2026/1080, Table 1"
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 37,
+      "year": 2026.37,
+      "log2T": 119.1,
+      "ref": "Zhang, Li, Gao, Wang, EUROCRYPT 2026 (memory 2^39.9)",
+      "source": "ePrint 2026/1080 and 2026/1120, Table 1",
+      "mem": 39.9
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 32,
+      "year": 2026.41,
+      "log2T": null,
+      "ref": "No 32-step figure published; practical collisions exist for 31 steps (ASIACRYPT 2024) and 35 steps (ePrint 2026/1080)",
+      "source": "ePrint 2026/1080, Table 1"
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 35,
+      "year": 2026.41,
+      "log2T": null,
+      "practical": true,
+      "ref": "Li, Liu, Wang, Shi, CRYPTO 2026 (ePrint 2026/1080): practical 35-step collision",
+      "source": "ePrint 2026/1080, Table 1"
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 37,
+      "year": 2026.41,
+      "log2T": 81,
+      "ref": "Li, Liu, Wang, Shi, CRYPTO 2026 (ePrint 2026/1080), memory 2^53.0",
+      "source": "ePrint 2026/1080, Table 1",
+      "mem": 53.0
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 37,
+      "year": 2026.42,
+      "log2T": 79.1,
+      "ref": "Li, Zhang, Li, Liu, Qian, Zhu (ePrint 2026/1120), negligible memory",
+      "source": "ePrint 2026/1120, Table 1",
+      "mem": null
+    },
+    {
+      "hash": "SHA-256",
+      "rounds": 38,
+      "year": 2026.42,
+      "log2T": 104.3,
+      "ref": "Li, Zhang, Li, Liu, Qian, Zhu (ePrint 2026/1120): first 38-step collision attack, negligible memory; 2^100 first blocks x 2^4 dominate",
+      "source": "ePrint 2026/1120, Table 1 and Sect. 3.1",
+      "mem": null
+    },
+    {
+      "hash": "SHA3-256",
+      "rounds": 4,
+      "year": 2012.2,
+      "log2T": null,
+      "practical": true,
+      "ref": "Dinur, Dunkelman, Shamir, FSE 2012: practical 4-round Keccak-256 collision",
+      "source": "keccak.team; ePrint 2019/147, Table 1"
+    },
+    {
+      "hash": "SHA3-256",
+      "rounds": 5,
+      "year": 2012.9,
+      "log2T": 115,
+      "ref": "Dinur, Dunkelman, Shamir, FSE 2013 (ePrint 2012/672), Keccak-256",
+      "source": "keccak.team; ePrint 2019/147, Table 1",
+      "mem": "unknown"
+    },
+    {
+      "hash": "SHA3-256",
+      "rounds": 5,
+      "year": 2019.14,
+      "log2T": 36.7,
+      "approx": true,
+      "practical": true,
+      "ref": "Guo, Liao, Liu, Liu, Qiao, Song, J. Cryptology 2020 (ePrint 2019/147): real collision; trail weight 36.70, 45.6 h search after a 428.8 h connector",
+      "source": "ePrint 2019/147, Table 6 (weight, not a total)",
+      "mem": null
+    },
+    {
+      "hash": "SHA3-256",
+      "rounds": 6,
+      "year": 2022.2,
+      "log2T": null,
+      "none": true,
+      "ref": "Guo, Liu, Song, Tu, ASIACRYPT 2022 (ePrint 2022/184): classical attacks do not reach 6-round SHA3-256 (quantum only)",
+      "source": "abstract"
+    }
+  ],
+  "noPriorAttack": [
+    {
+      "hash": "BLAKE3",
+      "rounds": 1,
+      "note": "No published collision attack on the hash of BLAKE, BLAKE2 or BLAKE3 at any round count (BLAKE3 spec, Table 4; ePrint and arXiv searches). Published results are preimages (2.5 rounds), compression-function near-collisions (4 rounds) and boomerang distinguishers."
+    },
+    {
+      "hash": "SHA3-256",
+      "rounds": 6,
+      "note": "No classical collision attack (ePrint 2022/184); none since, per ePrint 2026/2107."
+    }
+  ],
+  "otherAttacks": [
+    {
+      "hash": "SHA-256",
+      "year": 2013.4,
+      "label": "38r semi-free-start",
+      "ref": "Mendel, Nad, Schläffer, EUROCRYPT 2013: practical 38-step semi-free-start collision",
+      "source": "ePrint 2026/1120, Table 1"
+    },
+    {
+      "hash": "SHA-256",
+      "year": 2024.15,
+      "label": "39r semi-free-start",
+      "ref": "Li, Liu, Wang, EUROCRYPT 2024: practical 39-step semi-free-start collision",
+      "source": "ePrint 2026/1120, Table 1"
+    },
+    {
+      "hash": "SHA3-256",
+      "year": 2019.3,
+      "label": "3r preimage",
+      "ref": "Li, Sun, EUROCRYPT 2019: preimages for 3-round Keccak-256, 2^81-2^86",
+      "source": "keccak.team third-party cryptanalysis page"
+    },
+    {
+      "hash": "BLAKE3",
+      "year": 2009.41,
+      "label": "2.5r preimage",
+      "ref": "Li, Xu (ePrint 2009/238): attacks on 2.5-round BLAKE; preimage 2^241 (BLAKE3 spec, Table 4)",
+      "source": "abstract; BLAKE3 spec"
+    },
+    {
+      "hash": "BLAKE3",
+      "year": 2010.08,
+      "label": "4r near-collisions",
+      "ref": "Aumasson et al., FSE 2010 (ePrint 2010/043); Su et al. (ePrint 2010/355): near-collisions of the 4-round compression function",
+      "source": "abstracts"
+    },
+    {
+      "hash": "BLAKE3",
+      "year": 2014.99,
+      "label": "boomerangs ≤8r",
+      "ref": "Hao (ePrint 2014/1012): boomerang attacks on BLAKE and BLAKE2",
+      "source": "abstract"
+    },
+    {
+      "hash": "BLAKE3",
+      "year": 2023.16,
+      "label": "7r boomerang",
+      "ref": "ePrint 2023/299: boomerang distinguisher on the full 7-round BLAKE3 keyed permutation, 2^180",
+      "source": "abstract"
+    }
+  ],
+  "history": {
+    "_about": "Full (not reduced-round) hash functions. Green: no collision attack; red: collisions found in practice. MD5 starts green here (Zooko's survey has it yellow for its 128-bit output).",
+    "lanes": [
+      {
+        "name": "MD5",
+        "designed": 1992,
+        "bands": [
+          [
+            1992,
+            "g"
+          ],
+          [
+            2004.6,
+            "r"
+          ]
+        ],
+        "collisions": [
+          [
+            2004.6,
+            "first collision",
+            "August 2004: Wang, Feng, Lai and Yu announce MD5 collisions at the CRYPTO rump session (ePrint 2004/199). Found in about an hour on an IBM p690; the first collision for a widely used hash."
+          ],
+          [
+            2008.99,
+            "rogue CA",
+            "December 2008: Sotirov, Stevens, Appelbaum, Lenstra, Molnar, Osvik and de Weger present a forged CA certificate at 25C3, built with an MD5 chosen-prefix collision on 200 PlayStation 3s. Trusted by every browser; CRYPTO 2009 paper."
+          ],
+          [
+            2012.4,
+            "Flame found",
+            "May 2012: the Flame espionage malware is found (Kaspersky, CrySyS, Iran CERT). Its forged Microsoft code-signing certificate used a new MD5 chosen-prefix collision."
+          ]
+        ],
+        "other": [
+          [
+            1993.4,
+            "compression pseudo-collision",
+            "1993: den Boer and Bosselaers find a pseudo-collision of MD5's compression function (same message, two different IVs). EUROCRYPT 1993."
+          ],
+          [
+            1996.4,
+            "compression collision",
+            "1996: Dobbertin finds collisions of MD5's compression function for a chosen IV, and recommends against new uses of MD5. Not a collision of the hash."
+          ]
+        ],
+        "ranges": [
+          [
+            2010.0,
+            2012.4,
+            "Flame active",
+            "Flame's forged certificate was in use before discovery; Kaspersky's analysis dates the operation to at least 2010, and some analyses suggest 2007."
+          ]
+        ]
+      },
+      {
+        "name": "SHA-1",
+        "designed": 1995,
+        "bands": [
+          [
+            1995,
+            "g"
+          ],
+          [
+            2005.6,
+            "r"
+          ]
+        ],
+        "collisions": [
+          [
+            2005.6,
+            "2^69 attack",
+            "February 2005: Wang, Yin and Yu announce a SHA-1 collision attack in 2^69 operations, far below the 2^80 birthday bound (CRYPTO 2005). No collision is produced, but NIST begins planning the move away from SHA-1."
+          ],
+          [
+            2017.15,
+            "SHAttered",
+            "February 2017: Stevens, Bursztein, Karpman, Albertini and Markov (CWI and Google) publish the first SHA-1 collision: two PDFs, about 2^63 computations, 6,500 CPU-years plus 110 GPU-years."
+          ],
+          [
+            2020.0,
+            "chosen-prefix",
+            "January 2020: Leurent and Peyrin publish 'SHA-1 is a Shambles', the first chosen-prefix SHA-1 collision (about 2^63.4), and use it to impersonate a PGP key. USENIX Security 2020."
+          ]
+        ],
+        "other": [
+          [
+            2015.8,
+            "freestart collision",
+            "October 2015: Stevens, Karpman and Peyrin publish 'the SHAppening', a freestart collision of SHA-1's compression function (attacker-chosen IV), about 2^57 on GPUs. EUROCRYPT 2016."
+          ]
+        ]
+      },
+      {
+        "name": "SHA-256",
+        "designed": 2001,
+        "bands": [
+          [
+            2001,
+            "g"
+          ]
+        ],
+        "collisions": [],
+        "other": [],
+        "events": [
+          [
+            2001.6,
+            "",
+            "August 2002: FIPS 180-2 publishes SHA-256 (drafted 2001). No collision attack on the full 64-step function has been published; the best reach 38 of 64 steps (2026)."
+          ]
+        ]
+      },
+      {
+        "name": "Keccak · SHA-3",
+        "designed": 2008.8,
+        "bands": [
+          [
+            2008.8,
+            "g"
+          ]
+        ],
+        "collisions": [],
+        "other": [],
+        "events": [
+          [
+            2012.75,
+            "wins",
+            "October 2012: NIST selects Keccak (Bertoni, Daemen, Peeters, Van Assche) as the winner of the SHA-3 competition, from 64 entries."
+          ],
+          [
+            2015.6,
+            "FIPS 202",
+            "August 2015: NIST publishes FIPS 202, standardising SHA3-224/256/384/512 and SHAKE128/256."
+          ]
+        ]
+      },
+      {
+        "name": "BLAKE family",
+        "designed": 2008.8,
+        "bands": [
+          [
+            2008.8,
+            "g"
+          ]
+        ],
+        "collisions": [],
+        "other": [],
+        "events": [
+          [
+            2012.9,
+            "BLAKE2",
+            "December 2012: Aumasson, Neves, Wilcox-O'Hearn and Winnerlein publish BLAKE2, a faster BLAKE with fewer rounds (10 for BLAKE2s, 12 for BLAKE2b)."
+          ],
+          [
+            2020.03,
+            "BLAKE3",
+            "January 2020: O'Connor, Aumasson, Neves and Wilcox-O'Hearn publish BLAKE3: 7 rounds, a Merkle tree mode, and parallelism."
+          ]
+        ]
+      }
+    ],
+    "competition": {
+      "year": 2007.84,
+      "label": "SHA-3 competition"
+    },
+    "sources": "Colours and design years: Zooko's survey (2017). Events: Wang et al. CRYPTO 2004 rump / ePrint 2004/199 (MD5), Sotirov et al. 25C3 2008 (rogue CA), Wang et al. CRYPTO 2005 (SHA-1 2^69), Stevens et al. 2017 (SHAttered), Leurent and Peyrin, USENIX Security 2020 (chosen prefix); den Boer and Bosselaers EUROCRYPT 1993, Dobbertin 1996, Stevens, Karpman and Peyrin EUROCRYPT 2016 (freestart). Flame: discovered May 2012 (Kaspersky, CrySyS, Iran CERT); its forged Microsoft certificate used an MD5 chosen-prefix collision (Microsoft SRD blog, June 2012; Stevens' analysis). Kaspersky's analysis dated its operation to at least 2010, so the bar runs from 2010 to discovery."
+  },
+  "poseidon": {
+    "proposer": "Ankita Singh",
+    "discussion": 380,
+    "proposed": "2026-10-06",
+    "chosen": "2026-10-08",
+    "target": "Zcash Orchard Poseidon: Pallas field, width 3, x^5, sponge",
+    "firstRounds": "(R_F, R_P) = (1, 2)"
+  },
+  "aliases": {
+    "Jbenisek": "Cyberaxe"
+  },
+  "_aliases": "Preferred display names, by the solver's request. The Yukon handle stays in parentheses so submissions can be looked up.",
+  "_mem": "mem: log2 bytes of memory; null = negligible (counted as 0); 'unknown' = not stated where read. Under Zooko's metric cost = log2T + mem.",
+  "_metric": "Zooko's survey counts an attack as cheaper than brute force only if time × memory is below brute force (Bernstein 2005). Generic collision search (van Oorschot–Wiener) runs in 2^128 with negligible memory, so the generic line stays at 128 under both metrics.",
+  "designs": {
+    "_about": "Round counts chosen by designers over time, per family. Each entry: [year, rounds, name].",
+    "SHA-256": [
+      [
+        2002.6,
+        64,
+        "SHA-256"
+      ]
+    ],
+    "SHA3-256": [
+      [
+        2008.8,
+        24,
+        "Keccak"
+      ],
+      [
+        2016.6,
+        12,
+        "KangarooTwelve"
+      ],
+      [
+        2023.5,
+        12,
+        "TurboSHAKE"
+      ]
+    ],
+    "BLAKE3": [
+      [
+        2008.8,
+        14,
+        "BLAKE"
+      ],
+      [
+        2012.9,
+        10,
+        "BLAKE2s"
+      ],
+      [
+        2020.03,
+        7,
+        "BLAKE3"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Secure hashes, and HashSmash</title>
+<style>
+  :root { --bg:#0e0f12; --ink:#e8e6e3; --dim:#8b8d93; --faint:#3a3c42; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--ink);
+               font-family: ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif; }
+  section { display:none; position:absolute; inset:0; padding:3.5vh 4vw; box-sizing:border-box; }
+  section.on { display:flex; flex-direction:column; }
+  h2 { font-size:3.8vh; margin:0 0 1.5vh; font-weight:650; letter-spacing:-0.01em; }
+  .fig { flex:1; min-height:0; }
+  svg { width:100%; height:100%; display:block; }
+  svg text { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .nav { position:fixed; right:2vw; bottom:1.5vh; color:var(--faint); font:1.6vh ui-monospace, monospace; }
+  .foot { color:var(--dim); font-size:1.6vh; margin-top:1vh; }
+  .backup h2::before { content:"backup · "; color:var(--dim); font-weight:400; }
+</style>
+</head>
+<body>
+
+<section id="s-title"><div class="fig" id="f-title"></div></section>
+
+<section id="s-hashes"><div class="fig" id="f-hashes"></div></section>
+
+<section id="s-hopwood"><div class="fig" id="f-hopwood"></div>
+  <div class="foot">Daira-Emma Hopwood</div></section>
+
+<section id="s-sigtable"><div class="fig" id="f-sigtable"></div>
+  <div class="foot">After Zooko, “lessons from the history of attacks on secure hash functions” (2017), Figure 0</div></section>
+
+<section id="s-history"><div class="fig" id="f-history"></div>
+  <div class="foot" id="foot-history"></div></section>
+
+<section id="s-activity"><div class="fig" id="f-activity"></div></section>
+
+<section id="s-rounds"><div class="fig" id="f-rounds"></div>
+  <div class="foot">solid: rounds the designers chose · dashed: rounds with a published full collision · shaded: the margin · red: HashSmash</div></section>
+
+<section id="s-negative"><div class="fig" id="f-negative"></div></section>
+
+<section id="s-end"><div class="fig" id="f-end"></div></section>
+
+<section id="s-negative-data" class="backup"><h2>Negative results, measured</h2><div class="fig" id="f-negative-data"></div></section>
+<section id="s-hashes2" class="backup"><h2>Secure hashes: necessary, sufficient, strictly safer</h2><div class="fig" id="f-hashes2"></div></section>
+<section id="s-week2" class="backup"><h2>One week of HashSmash</h2><div class="fig" id="f-week2"></div>
+  <div class="foot">time × memory · AI-reviewed; human review pending</div></section>
+<section id="s-timeline" class="backup"><h2>Reduced rounds: decades of cryptanalysis, then one week of HashSmash</h2>
+  <div class="fig" id="f-timeline"></div><div class="foot" id="foot-timeline"></div></section>
+<section id="s-sha256" class="backup"><h2>SHA-256 by solver</h2><div class="fig" id="f-sha256"></div></section>
+<section id="s-blake" class="backup"><h2>BLAKE: the first collision attack, ever</h2><div class="fig" id="f-blake"></div></section>
+<section id="s-poseidon" class="backup"><h2>Next: Poseidon</h2><div class="fig" id="f-poseidon"></div></section>
+<section id="s-margin" class="backup"><h2>Rounds with a known collision attack</h2><div class="fig" id="f-margin"></div></section>
+<section id="s-before-after" class="backup"><h2>Before and after HashSmash</h2><div class="fig" id="f-before-after"></div></section>
+<section id="s-anatomy" class="backup"><h2>SHA-256, 38 rounds: where the bits come from</h2><div class="fig" id="f-anatomy"></div></section>
+<section id="s-week" class="backup"><h2>The week, as it happened</h2><div class="fig" id="f-week"></div></section>
+<section id="s-who" class="backup"><h2>Who took part</h2><div class="fig" id="f-who"></div></section>
+<section id="s-sources" class="backup"><h2>Sources</h2><div class="fig" id="f-sources" style="overflow:auto"></div></section>
+
+<div class="nav" id="nav"></div>
+<script src="data.js"></script>
+<script src="slides.js"></script>
+</body>
+</html>
