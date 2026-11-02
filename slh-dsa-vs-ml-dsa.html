@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLH-DSA stands on one leg; ML-DSA on two</title>
+<style>
+  html, body { margin:0; height:100%; background:#0e0f12; color:#e8e6e3; font-family: ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif; }
+  body { display:flex; flex-direction:column; justify-content:center; padding:3.5vh 4vw; box-sizing:border-box; }
+  #fig { height:84vh; } #fig svg { width:100%; height:100%; display:block; }
+  svg text { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .foot { color:#8b8d93; font-size:1.6vh; margin-top:1vh; }
+</style>
+<body>
+<div id="fig"></div>
+<div class="foot">After Daira-Emma Hopwood · ML-DSA uses SHAKE256 and SHAKE128 (FIPS 204) · SLH-DSA-SHAKE uses SHAKE256 (FIPS 205)</div>
+<script>
+const NS = 'http://www.w3.org/2000/svg', INK = '#e8e6e3', DIM = '#8b8d93', FAINT = '#3a3c42', GREEN = '#8dd3ac', RED = '#ff6565';
+function el(tag, attrs, parent, text) {
+  const e = document.createElementNS(NS, tag);
+  if (tag === 'text') e.setAttribute('fill', INK);
+  for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v);
+  if (text !== undefined) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+const s = el('svg', { viewBox: '0 0 1600 760', preserveAspectRatio: 'xMidYMid meet' }, document.getElementById('fig'));
+const top_ = 250, floor = 560;  // window.top is the browser's own
+const leg = (x, label, col) => {
+  el('rect', { x: x - 18, y: top_ + 24, width: 36, height: floor - top_ - 24, fill: col }, s);
+  el('text', { x, y: floor + 44, 'text-anchor': 'middle', 'font-size': 26, 'font-weight': 700, fill: col }, s, label);
+};
+const tabletop = (cx, w) => el('rect', { x: cx - w / 2, y: top_, width: w, height: 26, rx: 6, fill: INK }, s);
+el('line', { x1: 80, x2: 1520, y1: floor, y2: floor, stroke: FAINT, 'stroke-width': 3 }, s);
+// left: SLH-DSA-SHAKE, one leg
+const lx = 430;
+el('text', { x: lx, y: 120, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 700, fill: GREEN }, s, 'SLH-DSA-SHAKE');
+tabletop(lx, 360); leg(lx, 'SHAKE', GREEN);
+el('rect', { x: lx - 90, y: floor - 16, width: 180, height: 16, rx: 4, fill: GREEN }, s);
+el('text', { x: lx, y: 680, 'text-anchor': 'middle', 'font-size': 26, fill: DIM }, s, 'falls if SHAKE breaks');
+// right: ML-DSA, two legs, both needed
+const rx = 1170;
+el('text', { x: rx, y: 120, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 700, fill: RED }, s, 'ML-DSA');
+tabletop(rx, 420); leg(rx - 170, 'SHAKE', GREEN); leg(rx + 170, 'module lattices', RED);
+el('text', { x: rx, y: 680, 'text-anchor': 'middle', 'font-size': 26, fill: DIM }, s, 'falls if SHAKE breaks');
+el('text', { x: rx, y: 718, 'text-anchor': 'middle', 'font-size': 26, fill: RED }, s, 'or if module lattices do');
+</script>
