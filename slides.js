@@ -252,8 +252,8 @@ function drawNegative() {
 
 // ---------------------------------------------------------------- main: HashSmash, live
 function drawActivity() {
-  const s = svg('f-activity', 1700, 1352);
-  el('image', { href: 'scrot.png', x: 0, y: 0, width: 1700, height: 1352 }, s);
+  const s = svg('f-activity', 1394, 1184);
+  el('image', { href: 'scrot.png', x: 0, y: 0, width: 1394, height: 1184 }, s);
 }
 
 // ---------------------------------------------------------------- navigation
