@@ -1,53 +1,90 @@
 #!/usr/bin/env python3
-"""Build slides/data.js from Yukon submission exports and literature.json.
+"""Build data.js from HashSmash's results on Yukon and literature.json.
 
-Inputs: /tmp/<track>-exploratory.json, written by
-  yukon submissions mooselumph/hashsmash/<track> --all --json
-(closed tracks r31/r32 by benchmark id). A HashSmash result is a submission
-with an official score whose status is 'review' (passed AI review, awaiting
-manual review) or 'accepted'.
+    python3 build_data.py
+
+It reads each track's submissions from Yukon's public API (no key needed). A
+HashSmash result is a submission with status 'review' (passed AI review,
+awaiting manual review) or 'accepted', and its official time and memory:
+officialMetrics.timeLog2 (in compressions of the reduced hash) and
+memoryLog2Bytes.
+
+HashSmash's cost model prices generic collision search below 2^128: for each
+hash, data.js records the best passed entry for the full hash on its pareto
+benchmark, where no shortcut exists, and the slides shift HashSmash's numbers
+so that this level sits at 2^128.
 """
-import json, re, collections, pathlib
+import collections, datetime, json, pathlib, urllib.request
 
 HERE = pathlib.Path(__file__).parent
-TRACKS = {  # track -> (hash, rounds)
-    'sha256-r32': ('SHA-256', 32),
-    'sha256-r37': ('SHA-256', 37), 'sha256-r38': ('SHA-256', 38),
-    'sha3-256-r5': ('SHA3-256', 5), 'sha3-256-r6': ('SHA3-256', 6),
-    'blake3-r2': ('BLAKE3', 2),
+API = 'https://api.yukon.org/api/benchmarks/{}/submissions'
+TRACKS = {  # track -> (benchmark id, hash, rounds)
+    'sha256-r32': ('472669a3-e4a4-4961-a7ad-7d4cf75ad940', 'SHA-256', 32),
+    'sha256-r37': ('4f9e5d52-55ee-49b9-9e5f-6aa1996305c2', 'SHA-256', 37),
+    'sha256-r38': ('71414160-42e9-4f5c-be0f-76c46d0572e2', 'SHA-256', 38),
+    'sha3-256-r5': ('c05f9294-2c77-4240-9852-1cc7b9de2488', 'SHA3-256', 5),
+    'sha3-256-r6': ('48a58a66-a65c-42c2-a97d-f2d0195e2509', 'SHA3-256', 6),
+    'blake3-r2': ('3ee5418a-a960-45f0-a82f-e43657f38c6b', 'BLAKE3', 2),
 }
+PARETO = {  # hash -> (benchmark id, full rounds); every round count from the first attacked to the full hash
+    'SHA-256': ('29c9499d-9f4d-47e6-b99f-c8424cc534a5', 64),
+    'SHA3-256': ('662f6ac5-51d4-404a-97be-1a9056442ed9', 24),
+    'BLAKE3': ('c6b52037-4c01-4422-977f-2444dd5d2960', 7),
+}
+FROM_PARETO = {'sha256-r39': ('SHA-256', 39)}  # tracks the pareto benchmark alone holds
 PASSED = ('review', 'accepted')
 
-tracks, models, harnesses, solvers, statuses = {}, collections.Counter(), collections.Counter(), set(), collections.Counter()
-for track, (hash_, rounds) in TRACKS.items():
-    subs = json.load(open(f'/tmp/{track}-exploratory.json'))['submissions']
-    assert subs, track
-    points, steps, stepsTM, best, bestTM = [], [], [], None, None
-    for s in sorted(subs, key=lambda s: s['createdAt']):
-        solvers.add(s['solverUsername']); statuses[s['status']] += 1
-        note = s['note'] or ''
-        m = re.search(r'^Model:\s*(.+)$', note, re.M); h = re.search(r'^Harness:\s*(.+)$', note, re.M)
-        if m: models[m.group(1).strip()] += 1
-        if h: harnesses[h.group(1).strip()] += 1
-        if s['officialScore'] is None or s['status'] not in PASSED:
-            continue
-        mem = s['officialMetrics']['memoryLog2Bytes']
-        assert mem is not None, (track, s['id'])
-        T, TM = s['officialScore'], s['officialScore'] + mem
-        points.append([s['createdAt'][:16], T, mem])
-        if best is None or T < best:
-            best = T; steps.append([s['createdAt'][:16], T, s['solverUsername'], mem])
-        if bestTM is None or TM < bestTM:
-            bestTM = TM; stepsTM.append([s['createdAt'][:16], TM, s['solverUsername'], mem])
-    tracks[track] = {'hash': hash_, 'rounds': rounds, 'n': len(subs),
-                     'start': min(s['createdAt'] for s in subs)[:16],
-                     'points': points, 'steps': steps, 'best': best, 'stepsTM': stepsTM, 'bestTM': bestTM}
 
+def fetch(benchmark):
+    with urllib.request.urlopen(API.format(benchmark), timeout=120) as r:
+        subs = json.load(r)['submissions']
+    assert subs, benchmark
+    return subs
+
+
+def passed(subs):
+    return [s for s in subs if s['status'] in PASSED and s['officialMetrics'] and s['officialMetrics'].get('timeLog2') is not None]
+
+
+def track(hash_, rounds, subs):
+    points, steps, stepsTM, best, bestTM = [], [], [], None, None
+    for s in sorted(passed(subs), key=lambda s: s['createdAt']):
+        m = s['officialMetrics']
+        T, mem = m['timeLog2'], m['memoryLog2Bytes']
+        assert mem is not None, s['id']
+        when = s['createdAt'][:16]
+        points.append([when, T, mem])
+        if best is None or T < best:
+            best = T; steps.append([when, T, s['solverUsername'], mem])
+        if bestTM is None or T + mem < bestTM:
+            bestTM = T + mem; stepsTM.append([when, T + mem, s['solverUsername'], mem])
+    assert points, (hash_, rounds)
+    return {'hash': hash_, 'rounds': rounds, 'n': len(subs), 'start': min(s['createdAt'] for s in subs)[:16],
+            'points': points, 'steps': steps, 'best': best, 'stepsTM': stepsTM, 'bestTM': bestTM}
+
+
+tracks = {name: track(h, r, fetch(b)) for name, (b, h, r) in TRACKS.items()}
+generic = {}
+for hash_, (benchmark, full) in PARETO.items():
+    subs = fetch(benchmark)
+    at = lambda r: [s for s in passed(subs) if s['officialMetrics'].get('rounds') == r]
+    entries = at(full)
+    assert entries, hash_
+    generic[hash_] = {'time': min(s['officialMetrics']['timeLog2'] for s in entries),
+                      'tm': min(s['officialMetrics']['timeLog2'] + s['officialMetrics']['memoryLog2Bytes'] for s in entries)}
+    for name, (h, r) in FROM_PARETO.items():
+        if h == hash_:
+            tracks[name] = track(h, r, at(r))
+
+today = datetime.datetime.now(datetime.timezone.utc)
 data = {
     'literature': json.load(open(HERE / 'literature.json')),
     'tracks': tracks,
-    'stats': {'submissions': sum(t['n'] for t in tracks.values()), 'solvers': len(solvers),
-              'statuses': statuses, 'models': models.most_common(), 'harnesses': harnesses.most_common()},
+    'generic': generic,
+    'updated': f'Updated {today.day} {today:%B %Y}, after the Cambridge workshop',
 }
 (HERE / 'data.js').write_text('// Generated by build_data.py; do not edit.\nconst DATA = ' + json.dumps(data, indent=1) + ';\n')
-print({t: (v['best'], v['bestTM'], v['n']) for t, v in tracks.items()}, data['stats']['submissions'], data['stats']['solvers'])
+for name, t in tracks.items():
+    g = generic[t['hash']]
+    print(f"{name:12} n={t['n']:4}  time 2^{t['best'] - g['time'] + 128:6.2f}  time x memory 2^{t['bestTM'] - g['tm'] + 128:6.2f}  (raw 2^{t['best']:.2f}, 2^{t['bestTM']:.2f})")
+print('generic:', generic)
